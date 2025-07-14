@@ -1,0 +1,131 @@
+/* Base du body */
+body {
+    background-color: #1c1c1c; /* gris très foncé presque noir */
+    color: #ddd; /* texte gris clair */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Titres */
+h1, h2, h3, h4, h5 {
+    color: #eee;
+    font-weight: 600;
+}
+
+/* Liens */
+a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover, a:focus {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Boutons Bootstrap overrides (pour harmoniser) */
+.btn-primary {
+    background-color: #333 !important;
+    border-color: #555 !important;
+    color: #ddd !important;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #555 !important;
+    border-color: #777 !important;
+    color: #fff !important;
+}
+
+.btn-success {
+    background-color: #444 !important;
+    border-color: #666 !important;
+    color: #ddd !important;
+}
+
+.btn-success:hover, .btn-success:focus {
+    background-color: #666 !important;
+    border-color: #888 !important;
+    color: #fff !important;
+}
+
+.btn-danger {
+    background-color: #222 !important;
+    border-color: #444 !important;
+    color: #ddd !important;
+}
+
+.btn-danger:hover, .btn-danger:focus {
+    background-color: #444 !important;
+    border-color: #666 !important;
+    color: #fff !important;
+}
+
+/* Navbar simple */
+nav {
+    margin-bottom: 20px;
+}
+
+/* Form inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+    background-color: #2b2b2b;
+    border: 1px solid #555;
+    color: #ddd;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus {
+    background-color: #3a3a3a;
+    border-color: #888;
+    color: #fff;
+    outline: none;
+}
+
+/* Cards */
+.card {
+    background-color: #2a2a2a;
+    color: #ccc;
+}
+
+.card:hover {
+    background-color: #3a3a3a;
+}
+
+/* Badges */
+.badge-available {
+    background-color: #444;
+    color: #aaa;
+    font-weight: 600;
+}
+
+.badge-unavailable {
+    background-color: #111;
+    color: #f55;
+    font-weight: 700;
+}
+
+/* Container */
+.container {
+    max-width: 960px;
+}
+
+/* Footer buttons */
+.mt-4 a.btn {
+    min-width: 100px;
+}
+
+/* Scrollbar sombre (optionnel) */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 4px;
+}
