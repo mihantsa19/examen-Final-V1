@@ -209,6 +209,59 @@ function getObjetsByMembreGroupedByCategorie($conn, $id_membre) {
     return $grouped;
 }
 
+function getAllMembres($conn) {
+    $result = $conn->query("SELECT id_membre, nom FROM membre ORDER BY nom");
+    $membres = [];
+    while ($row = $result->fetch_assoc()) {
+        $membres[] = $row;
+    }
+    return $membres;
+}
+
+function getEmpruntsByMembre($conn, $id_membre) {
+    $today = date('Y-m-d');
+    $stmt = $conn->prepare("SELECT emprunt.id_emprunt, objet.nom_objet, emprunt.date_emprunt, emprunt.date_retour_prevue, emprunt.etat 
+                            FROM emprunt 
+                            INNER JOIN objet ON emprunt.id_objet = objet.id_objet 
+                            WHERE emprunt.id_membre = ? AND emprunt.date_retour_reelle IS NULL");
+    $stmt->bind_param("i", $id_membre);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $emprunts = [];
+    while ($row = $result->fetch_assoc()) {
+        $emprunts[] = $row;
+    }
+    $stmt->close();
+    return $emprunts;
+}
+function getAllEmpruntsEnCours($conn) {
+    $sql = "SELECT 
+                emprunt.id_emprunt, 
+                emprunt.date_emprunt, 
+                emprunt.date_retour AS date_retour_prevue, 
+                emprunt.etat,
+                membre.nom AS nom_membre, 
+                objet.nom_objet
+            FROM emprunt
+            INNER JOIN membre ON emprunt.id_membre = membre.id_membre
+            INNER JOIN objet ON emprunt.id_objet = objet.id_objet
+            WHERE emprunt.date_retour IS NULL
+            ORDER BY emprunt.date_emprunt DESC";
+
+    $result = mysqli_query($conn, $sql);
+
+    $emprunts = [];
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $emprunts[] = $row;
+        }
+    }
+
+    return $emprunts;
+}
+
+
+
 
 
 ?>

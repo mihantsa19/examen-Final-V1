@@ -37,7 +37,7 @@ if (!$membre) {
     <a class="navbar-brand" href="accueil.php">🏠 Accueil</a>
     <a href="objets.php" class="btn btne ms"><---Retour</a>
     <a href="logout.php" class="btn btn-outline-danger ms-auto">Déconnexion</a>
-     
+    <a href="emprunt_en_cours.php" class = "btn ms">voir la Liste</a>
   </div>
 </nav>
 

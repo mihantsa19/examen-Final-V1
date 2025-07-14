@@ -83,6 +83,7 @@ if (isset($_GET['message']) && $_GET['message'] === 'emprunt_ok') {
       <a href="add_objet.php" class="btn btn-outline-success btn-sm">➕ Ajouter</a>
       <a href="logout.php" class="btn btn-outline-danger btn-sm">🚪 Déconnexion</a>
       <a href="index.php" class="btn btn-outline btn-sm">🏠 Accueil</a>
+      <a href="fiche_membre.php" class="btn-outline-success btn-sm">Mon profil</a>
     </div>
   </div>
 </nav>
