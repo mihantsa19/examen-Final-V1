@@ -1,0 +1,66 @@
+
+
+# tsara ho fantatra #
+Mi upload intelo ianareo 
+version 3
+- chaque page dia misy lien ...precen,suivant , accueil
+- ataontsika made foana 
+- functions atonkantsika foana 
+- css mitokana 
+- traitement rht any anatyfunctions 
+- css 
+- functions 
+- page \ ampiana index kely makany @ lay page tokony hidirana 
+ 
+  eviter lay misy voir plus sn reny fa soloy icon ,
+
+
+
+
+----------------------------------------------------------
+Examen Projet Final - S2 Info et Design
+Juillet 2025
+En binôme en rotation de 30 minutes
+On fait 1 seul push GIT par 30mn (avant la rotation)
+Technique
+Php
+Mysql
+Html , Css , Bootstrap
+Déroulement
+Il y aura 3 versions, chaque version sera déployée sur le serveur
+Ex: 
+http://172.0.9.1/xxx/final-project/v1
+http://172.0.9.1/xxx/final-project/v2
+http://172.0.9.1/xxx/final-project/v3
+
+Lien questionnaire google forms
+https://forms.gle/QbFaS6v6xG4QGjg37
+
+Le lien de base est : http://172.0.9.1/xxx/final-project/
+Thème
+Vous allez développez un site web qui permet à ses membres d’emprunter des objets de différentes catégorie
+Version 1
+Créer la base de données:
+membre (id_membre, nom , date de naissance, genre, émail, ville, mdp, image_profil)
+categorie_objet (id_categorie, nom_categorie )
+objet (id_objet , nom_objet , id_categorie, id_membre)
+images_objet(id_image, id_objet, nom_image)
+emprunt(id_emprunt, id_objet, id_membre, date_emprunt, date_retour)
+Insérer les données de test
+4  membres
+4 catégories ( esthétique, bricolage, mécanique , cuisine )
+10 objets par membre à répartir sur les catégories
+10 emprunts
+
+Page à créer
+Login et inscription
+Liste des objets , (avec date de retour si emprunt en cours )
+Filtre par catégorie 
+
+
+
+
+
+
+
+
