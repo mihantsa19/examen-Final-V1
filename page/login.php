@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 
 include(__DIR__ . '/../functions/functions.php');
 
+$error = '';
 if (isset($_POST['email'])) {
     $user = connecterMembre($_POST['email'], $_POST['mdp']);
     if ($user) {
@@ -22,95 +23,73 @@ if (isset($_POST['email'])) {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        body {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        .container {
-            background-color: #2c2c2c;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255,255,255,0.05);
-            margin-top: 5%;
-        }
-
-        h2 {
-            color: #cccccc;
-        }
-
-        label {
-            color: #bbbbbb;
-        }
-
-        .form-control {
-            background-color: #3a3a3a;
-            border: 1px solid #555;
-            color: #f0f0f0;
-        }
-
-        .form-control:focus {
-            background-color: #444;
-            border-color: #888;
-            color: #fff;
-            outline: none;
-        }
-
-        .btn-primary {
-            background-color: #5a5a5a;
-            border-color: #6e6e6e;
-        }
-
-        .btn-primary:hover {
-            background-color: #777;
-            border-color: #999;
-        }
-
-        .alert-danger {
-            background-color: #661111;
-            color: #f88;
-            border: 1px solid #992222;
-        }
-
-        a {
-            color: #a0a0a0;
-        }
-
-        a:hover {
-            color: #fff;
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Connexion</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .login-container {
+      max-width: 420px;
+      margin: 60px auto;
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.05);
+    }
+    .login-title {
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #343a40;
+    }
+    .btn-primary {
+      background-color: #0d6efd;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #0b5ed7;
+    }
+    .form-label {
+      font-weight: 500;
+    }
+    .small-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container" style="max-width: 400px;">
-    <h2 class="mb-4 text-center">Se connecter</h2>
-    
+<div class="container">
+  <div class="login-container">
+    <h2 class="login-title">🔐 Connexion</h2>
+
     <?php if (!empty($error)): ?>
-        <div class="alert alert-danger"><?= $error ?></div>
+      <div class="alert alert-danger"><?= $error ?></div>
     <?php endif; ?>
 
     <form method="post">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email :</label>
-            <input type="email" id="email" name="email" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="mdp" class="form-label">Mot de passe :</label>
-            <input type="password" id="mdp" name="mdp" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+      <div class="mb-3">
+        <label for="email" class="form-label">Adresse email</label>
+        <input type="email" class="form-control" id="email" name="email" required placeholder="ex: nom@exemple.com">
+      </div>
+      <div class="mb-3">
+        <label for="mdp" class="form-label">Mot de passe</label>
+        <input type="password" class="form-control" id="mdp" name="mdp" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Se connecter</button>
     </form>
-    <p class="mt-3 text-center">Pas encore inscrit ? <a href="register.php">Créer un compte</a></p>
+
+    <div class="small-link">
+      <p class="mt-3">Pas encore inscrit ? <a href="register.php">Créer un compte</a></p>
+    </div>
+  </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
