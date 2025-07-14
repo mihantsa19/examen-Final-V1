@@ -9,105 +9,143 @@ include(__DIR__ . '/../functions/functions.php');
 $conn = connectDB();
 
 $cat = isset($_GET['cat']) ? (int)$_GET['cat'] : null;
-$categories = getCategories($conn);
-$objets = getObjets($conn, $cat);
-?>
+$nom = isset($_GET['nom']) ? trim($_GET['nom']) : '';
+$dispo = isset($_GET['dispo']) ? true : false;
 
+$categories = getCategories($conn);
+$objets = searchObjets($conn, $cat, $nom, $dispo);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Objets disponibles</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        body {
-            background: #f0f2f5;
-        }
-        header {
-            background:rgb(119, 121, 122);
-            color: white;
-            padding: 1rem 0;
-            margin-bottom: 30px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        header h1 {
-            margin: 0;
-        }
-        .filter-btns .btn {
-            margin: 0 5px 10px 0;
-        }
-        .card:hover {
-            box-shadow: 0 0 15px rgba(170, 171, 172, 0.5);
-            transform: translateY(-5px);
-            transition: 0.3s ease;
-        }
-        .badge-available {
-            background-color:rgb(0, 0, 0);
-            font-weight: 600;
-        }
-        .badge-unavailable {
-            background-color:rgb(97, 79, 79);
-            font-weight: 600;
-        }
-        .logout-btn {
-            position: absolute;
-            right: 20px;
-            top: 15px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Objets disponibles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+      color: #212529;
+    }
+    .navbar {
+      background-color: #dee2e6;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .navbar-brand {
+      font-weight: bold;
+      color: #333;
+    }
+    .navbar .btn {
+      font-size: 0.9rem;
+    }
+    .filter-section {
+      background-color: #e9ecef;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .card {
+      border: none;
+      transition: transform 0.2s;
+      background-color: #fff;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .card img {
+      object-fit: cover;
+      height: 180px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    .badge-dispo {
+      background-color: #198754;
+    }
+    .badge-indispo {
+      background-color: #dc3545;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #888;
+      font-size: 0.85rem;
+    }
+  </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <div class="container-fluid">
+    <h1><a class="navbar-brand" href="accueil.php">📦 Gestion Objets</a><h1>
+    <div class="d-flex gap-2 align-items-center">
+      <a href="fiche_membre.php" class="btn btn-outline-primary btn-sm">👤 Mon profil</a>
+      <a href="add_objet.php" class="btn btn-outline-success btn-sm">➕ Ajouter</a>
+      <a href="logout.php" class="btn btn-outline-danger btn-sm">🚪 Déconnexion</a>
+      <a href=".php" class="btn btn-outline-secondary btn-sm">🏠 Accueil</a>
+    </div>
+  </div>
+</nav>
 
-<header class="text-center position-relative">
-    <h1>Objets disponibles</h1>
-    <a href="logout.php" class="btn btn-light btn-sm logout-btn">Se déconnecter</a>
 
-</header>
 
-<div class="container">
 
-    <div class="filter-btns mb-4">
-        <strong>Filtrer par catégorie :</strong>
+<div class="container mt-4">
+  <h3 class="mb-4">🔍 Rechercher un objet</h3>
+
+  <!-- Filtres -->
+  <form method="get" class="row g-3 filter-section mb-5">
+    <div class="col-md-4">
+      <select name="cat" class="form-select">
+        <option value="">-- Toutes les catégories --</option>
         <?php foreach ($categories as $c): ?>
-            <a href="objets.php?cat=<?= $c['id_categorie'] ?>" class="btn btn-outline-primary btn-sm <?= ($cat === (int)$c['id_categorie']) ? 'active' : '' ?>">
-                <?= $c['nom_categorie'] ?>
-            </a>
+          <option value="<?= $c['id_categorie'] ?>" <?= $cat == $c['id_categorie'] ? 'selected' : '' ?>>
+            <?= $c['nom_categorie'] ?>
+          </option>
         <?php endforeach; ?>
-        <a href="objets.php" class="btn btn-outline-secondary btn-sm <?= ($cat === null) ? 'active' : '' ?>">Tout</a>
+      </select>
     </div>
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <?php foreach ($objets as $o): ?>
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <h5 class="card-title"><?= $o['nom_objet'] ?></h5>
-                        <?php if (!empty($o['date_retour'])): ?>
-                            <span class="badge badge-unavailable p-2">Emprunté jusqu'au <?= $o['date_retour'] ?></span>
-                        <?php else: ?>
-                            <span class="badge badge-available p-2">Disponible</span>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
+    <div class="col-md-4">
+      <input type="text" name="nom" class="form-control" placeholder="Nom de l’objet..." value="<?= $nom ?>">
     </div>
+    <div class="col-md-2 form-check d-flex align-items-center">
+      <input class="form-check-input me-2" type="checkbox" name="dispo" id="dispo" <?= $dispo ? 'checked' : '' ?>>
+      <label class="form-check-label" for="dispo">Seulement disponibles</label>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary w-100" type="submit">🔎 Rechercher</button>
+    </div>
+  </form>
 
-    <div class="mt-5 d-flex justify-content-between">
-        <a href="accueil.php" class="btn btn-primary">🏠 Accueil</a>
-        <div>
-            <a href="#" class="btn btn-outline-secondary me-2">⬅️ Précédent</a>
-            <a href="#" class="btn btn-outline-secondary">➡️ Suivant</a>
+  
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <?php foreach ($objets as $o): ?>
+      <?php $img = !empty($o['image_principale']) ? '../uploads/' . $o['image_principale'] : '../uploads/default.jpg'; ?>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <img src="<?= $img ?>" class="card-img-top" alt="<?= $o['nom_objet'] ?>">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="fiche_objet.php?id_objet=<?= $o['id_objet'] ?>" class="text-decoration-none text-primary">
+                <?= $o['nom_objet'] ?>
+              </a>
+            </h5>
+            <?php if (!empty($o['date_retour'])): ?>
+              <span class="badge badge-indispo">❌ Indisponible jusqu’au <?= $o['date_retour'] ?></span>
+            <?php else: ?>
+              <span class="badge badge-dispo">✅ Disponible</span>
+            <?php endif; ?>
+          </div>
         </div>
-    </div>
-
+      </div>
+    <?php endforeach; ?>
+  </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-VGPSpMVo9yVjF63oCMh4yVuIPwyoLU4EkApM2gSn2ZhcIWWy2Rk5tz3Gl+RIF6tM" crossorigin="anonymous"></script>
+<footer class="mt-5 mb-4">
+  © <?= date('Y') ?> - Gestion des objets · Meilleur ami
+</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
