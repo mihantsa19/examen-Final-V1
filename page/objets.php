@@ -25,7 +25,7 @@ $objets = getObjets($conn, $cat);
             background: #f0f2f5;
         }
         header {
-            background:rgb(86, 123, 163);
+            background:rgb(119, 121, 122);
             color: white;
             padding: 1rem 0;
             margin-bottom: 30px;
@@ -49,7 +49,7 @@ $objets = getObjets($conn, $cat);
             font-weight: 600;
         }
         .badge-unavailable {
-            background-color:rgb(117, 114, 114);
+            background-color:rgb(97, 79, 79);
             font-weight: 600;
         }
         .logout-btn {
@@ -64,6 +64,7 @@ $objets = getObjets($conn, $cat);
 <header class="text-center position-relative">
     <h1>Objets disponibles</h1>
     <a href="logout.php" class="btn btn-light btn-sm logout-btn">Se déconnecter</a>
+
 </header>
 
 <div class="container">
